@@ -1,8 +1,14 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "diff", "diff/diff.csproj", "{729EE022-461E-A4E8-4D3D-DDDD93AC6106}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "diff", "diff\diff.csproj", "{729EE022-461E-A4E8-4D3D-DDDD93AC6106}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetCash", "NetCash", "{CB5366BE-FC2F-4EC9-B647-07AB3A5C3210}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5055E796-DAE5-48E5-A85A-F2BA83F0479F}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "NetCash.Core", "NetCash\src\NetCash.Core\NetCash.Core.fsproj", "{E9540912-E332-4B2F-9A5B-E198CB7B0BF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,11 +20,19 @@ Global
 		{729EE022-461E-A4E8-4D3D-DDDD93AC6106}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{729EE022-461E-A4E8-4D3D-DDDD93AC6106}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{729EE022-461E-A4E8-4D3D-DDDD93AC6106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9540912-E332-4B2F-9A5B-E198CB7B0BF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9540912-E332-4B2F-9A5B-E198CB7B0BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9540912-E332-4B2F-9A5B-E198CB7B0BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9540912-E332-4B2F-9A5B-E198CB7B0BF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09851A7F-1255-4DD4-B23B-661070DE1EDF}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5055E796-DAE5-48E5-A85A-F2BA83F0479F} = {CB5366BE-FC2F-4EC9-B647-07AB3A5C3210}
+		{E9540912-E332-4B2F-9A5B-E198CB7B0BF2} = {5055E796-DAE5-48E5-A85A-F2BA83F0479F}
 	EndGlobalSection
 EndGlobal

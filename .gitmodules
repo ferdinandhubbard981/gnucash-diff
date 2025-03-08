@@ -1,0 +1,3 @@
+[submodule "NetCash"]
+	path = NetCash
+	url = git@github.com:ferdinandhubbard981/NetCash.git
