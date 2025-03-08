@@ -1,0 +1,17 @@
+/home/ferdi/gnucash-version-control/diff/bin/Debug/net9.0/diff
+/home/ferdi/gnucash-version-control/diff/bin/Debug/net9.0/diff.deps.json
+/home/ferdi/gnucash-version-control/diff/bin/Debug/net9.0/diff.runtimeconfig.json
+/home/ferdi/gnucash-version-control/diff/bin/Debug/net9.0/diff.dll
+/home/ferdi/gnucash-version-control/diff/bin/Debug/net9.0/diff.pdb
+/home/ferdi/gnucash-version-control/diff/obj/Debug/net9.0/diff.GeneratedMSBuildEditorConfig.editorconfig
+/home/ferdi/gnucash-version-control/diff/obj/Debug/net9.0/diff.AssemblyInfoInputs.cache
+/home/ferdi/gnucash-version-control/diff/obj/Debug/net9.0/diff.AssemblyInfo.cs
+/home/ferdi/gnucash-version-control/diff/obj/Debug/net9.0/diff.csproj.CoreCompileInputs.cache
+/home/ferdi/gnucash-version-control/diff/obj/Debug/net9.0/diff.dll
+/home/ferdi/gnucash-version-control/diff/obj/Debug/net9.0/refint/diff.dll
+/home/ferdi/gnucash-version-control/diff/obj/Debug/net9.0/diff.pdb
+/home/ferdi/gnucash-version-control/diff/obj/Debug/net9.0/diff.genruntimeconfig.cache
+/home/ferdi/gnucash-version-control/diff/obj/Debug/net9.0/ref/diff.dll
+/home/ferdi/gnucash-version-control/diff/bin/Debug/net9.0/CommandLine.dll
+/home/ferdi/gnucash-version-control/diff/obj/Debug/net9.0/diff.csproj.AssemblyReference.cache
+/home/ferdi/gnucash-version-control/diff/obj/Debug/net9.0/diff.csproj.Up2Date
