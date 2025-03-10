@@ -1,4 +1,4 @@
-using NetCash;
+using NC = NetCash;
 
 class Diff
 {
@@ -10,7 +10,7 @@ class Diff
         this.steps = steps;
     }
 
-    public static Diff FromBooks(Book oldBook, Book newBook)
+    public static Diff FromBooks(NC.Book oldBook, NC.Book newBook)
     {
         List<BookMod> steps = new List<BookMod>();
         steps.AddRange(GenerateAccountSteps(oldBook, newBook));
@@ -18,21 +18,21 @@ class Diff
         return new Diff(steps);
     }
 
-    static List<BookMod> GenerateAccountSteps(Book oldBook, Book newBook)
+    static List<BookMod> GenerateAccountSteps(NC.Book oldBook, NC.Book newBook)
     {
-        List<Account> oldAccounts = (List<Account>) oldBook.Accounts;
-        List<Account> newAccounts = (List<Account>) newBook.Accounts;
+        List<NC.Account> oldAccounts = (List<NC.Account>) oldBook.Accounts;
+        List<NC.Account> newAccounts = (List<NC.Account>) newBook.Accounts;
         // let intersection be oldBook intersects newBook
-        List<Account> intersection = (List<Account>) oldAccounts.Intersect(newAccounts);
+        List<NC.Account> intersection = (List<NC.Account>) oldAccounts.Intersect(newAccounts);
         // let accountsRemoved be oldBook \ intersection
-        List<Account> accountsRemoved = (List<Account>) oldAccounts.Except(intersection);
+        List<NC.Account> accountsRemoved = (List<NC.Account>) oldAccounts.Except(intersection);
         // let accountsAdded be newBook \ intersection
-        List<Account> accountsAdded = (List<Account>) newAccounts.Except(intersection);
-        Comparison<Account> comparisonFunction = delegate (Account account1, Account account2)
+        List<NC.Account> accountsAdded = (List<NC.Account>) newAccounts.Except(intersection);
+        Comparison<NC.Account> comparisonFunction = delegate (NC.Account account1, NC.Account account2)
         {
-            Func<Account, int> getAccountDepth = delegate (Account account)
+            Func<NC.Account, int> getAccountDepth = delegate (NC.Account account)
             {
-                Account parent = account.Parent;
+                NC.Account parent = account.Parent;
                 int depth = 0;
                 while (parent != null)
                 {
@@ -64,12 +64,12 @@ class Diff
         accountsAdded.Sort(comparisonFunction);
         List<BookMod> account_steps = new List<BookMod>();
         // for accounts in accountsAdded and accountsRemoved: make into BookMod and add to list
-        foreach (Account account in accountsAdded)
+        foreach (NC.Account account in accountsAdded)
         {
             BookMod step = new AccountMod(ModType.ADD, account);
             account_steps.Add(step);
         }
-        foreach (Account account in accountsRemoved)
+        foreach (NC.Account account in accountsRemoved)
         {
             BookMod step = new AccountMod(ModType.REMOVE, account);
             account_steps.Add(step);
@@ -77,7 +77,7 @@ class Diff
         return account_steps;
     }
 
-    static List<BookMod> GenerateTransactionSteps(Book oldBook, Book newBook)
+    static List<BookMod> GenerateTransactionSteps(NC.Book oldBook, NC.Book newBook)
     {
         throw new NotImplementedException();
         /*
@@ -112,20 +112,20 @@ abstract class BookMod
         this.typeOfModification = typeOfModification;
     }
 
-    public abstract void ApplyMod(Book book);
+    public abstract void ApplyMod(NC.Book book);
     public abstract void DisplayMod();
 
 }
 
 class AccountMod : BookMod
 {
-    Account account;
-    public AccountMod(ModType typeOfModification, Account account) : base(typeOfModification)
+    NC.Account account;
+    public AccountMod(ModType typeOfModification, NC.Account account) : base(typeOfModification)
     {
         this.account = account;
     }
 
-    public override void ApplyMod(Book book)
+    public override void ApplyMod(NC.Book book)
     {
         throw new NotImplementedException();
     }
@@ -139,13 +139,13 @@ class AccountMod : BookMod
 
 class TransactionMod : BookMod
 {
-    Transaction transaction;
+    NC.Transaction transaction;
 
-    public TransactionMod(ModType typeOfModification, Transaction transaction) : base(typeOfModification)
+    public TransactionMod(ModType typeOfModification, NC.Transaction transaction) : base(typeOfModification)
     {
         this.transaction = transaction;
     }
-    public override void ApplyMod(Book book)
+    public override void ApplyMod(NC.Book book)
     {
         throw new NotImplementedException();
     }

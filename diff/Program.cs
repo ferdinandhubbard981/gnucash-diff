@@ -1,5 +1,5 @@
 ﻿using CommandLine;
-using NetCash;
+using NC = NetCash;
 
 
 class Program
@@ -17,9 +17,9 @@ class Program
         Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o =>
         {
 
-            GnuCashEngine.Initialize();
-            Book oldBook = Book.OpenRead(o.file_1);
-            Book newBook = Book.OpenRead(o.file_2);
+            NC.GnuCashEngine.Initialize();
+            NC.Book  oldBook = NC.Book .OpenRead(o.file_1);
+            NC.Book  newBook = NC.Book .OpenRead(o.file_2);
             Diff diff = Diff.FromBooks(oldBook, newBook);
             Console.WriteLine("file1: {0}", o.file_1);
         });
