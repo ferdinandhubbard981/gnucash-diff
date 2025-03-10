@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build diff",
             "program": "${workspaceFolder}/diff/bin/Debug/net9.0/diff.dll",
-            "args": ["--file_1", "1.gnucash", "--file_2", "2.gnucash"],
+            "args": ["--file_1", "${workspaceFolder}/data/old.gnucash", "--file_2", "${workspaceFolder}/data/new.gnucash"],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "console": "internalConsole"
