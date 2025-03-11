@@ -2,8 +2,8 @@ using NC = NetCash;
 namespace GNCDiff;
 public class Book
 {
-    Account root;
-    List<Split> splits;
+    public Account root {get;}
+    public List<Split> splits {get;}
     public Book(Account root, List<Split> splits)
     {
         this.root = root;

@@ -21,4 +21,32 @@ public class BookTests
         TestBookLoaded();
         TestBookLoaded();
     }
+
+    [Fact]
+    public void TestBookLoadedWithTransactions()
+    {
+        string inputFile = "../../../test_data/two_accounts_with_transactions.gnucash";
+        inputFile = Path.GetFullPath(inputFile);
+        Book book = Book.FromGNCFile(inputFile);
+        List<(double, string)> expectedSplits = new List<(double, string)>();
+        expectedSplits.Add((10025.0, "Expenses"));
+        expectedSplits.Add((-10025.0, "Checking"));
+        expectedSplits.Add((500, "Checking"));
+        expectedSplits.Add((-500, "Expenses"));
+        Assert.True(book.splits.Count == 4, "Expected there to be 4 transactions");
+        foreach (var expectedSplit in expectedSplits)
+        {
+            bool splitFound = false;
+            foreach (Split split in book.splits)
+            {
+                if (split.amount == expectedSplit.Item1 && split.account.fullName == expectedSplit.Item2)
+                {
+                    splitFound = true;
+                    break;
+                }
+            }
+            Assert.True(splitFound, "Should have contained a particular split");
+        }
+
+    }
 }

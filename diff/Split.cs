@@ -1,9 +1,9 @@
 using NC = NetCash;
 namespace GNCDiff;
 public class Split {
-    Account account;
-    NC.GncNumeric amount;
-    String memo;
+    public Account account {get;}
+    public NC.GncNumeric amount {get;}
+    public String memo {get;}
     public Split(Account account, NC.GncNumeric quantity, String memo)
     {
         this.account = account;

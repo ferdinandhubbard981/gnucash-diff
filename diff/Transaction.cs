@@ -2,7 +2,7 @@ using NC = NetCash;
 namespace GNCDiff;
 class Transaction
 {
-    List<Split> splits;
+    public List<Split> splits {get;}
     public Transaction(List<Split> splits)
     {
         this.splits = splits;

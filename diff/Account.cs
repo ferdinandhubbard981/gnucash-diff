@@ -3,9 +3,9 @@ namespace GNCDiff;
 public class Account
 {
     public String fullName {get;}
-    String name;
+    public String name {get;}
     public List<Account> children {get;}
-    Account? parent;
+    public Account? parent {get;}
     public Account(String name, String fullName, List<Account> children, Account? parent)
     {
         this.name = name;
