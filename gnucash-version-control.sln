@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5055E796-DAE
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "NetCash.Core", "NetCash\src\NetCash.Core\NetCash.Core.fsproj", "{E9540912-E332-4B2F-9A5B-E198CB7B0BF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "diff.Tests", "diff.Tests\diff.Tests.csproj", "{A2C6E2B4-9BFF-4AE7-B9FF-3E102C2F592B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{E9540912-E332-4B2F-9A5B-E198CB7B0BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9540912-E332-4B2F-9A5B-E198CB7B0BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9540912-E332-4B2F-9A5B-E198CB7B0BF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2C6E2B4-9BFF-4AE7-B9FF-3E102C2F592B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2C6E2B4-9BFF-4AE7-B9FF-3E102C2F592B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2C6E2B4-9BFF-4AE7-B9FF-3E102C2F592B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2C6E2B4-9BFF-4AE7-B9FF-3E102C2F592B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using NC = NetCash;
+using GNCDiff;
 
 
 class Program

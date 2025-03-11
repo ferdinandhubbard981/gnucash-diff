@@ -8,12 +8,18 @@
             "name": "launch diff",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build diff",
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/diff/bin/Debug/net9.0/diff.dll",
             "args": ["--file_1", "${workspaceFolder}/data/old.gnucash", "--file_2", "${workspaceFolder}/data/new.gnucash"],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "console": "internalConsole"
+        },
+
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
         }
     ]
 }

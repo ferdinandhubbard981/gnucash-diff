@@ -1,5 +1,6 @@
 using NC = NetCash;
-class Book
+namespace GNCDiff;
+public class Book
 {
     Account root;
     List<Split> splits;
@@ -9,6 +10,14 @@ class Book
         this.splits = splits;
     }
 
+    public static Book FromGNCFile(string file)
+    {
+        GNCInitialiseTracker.InitialiseGNCEngine();
+        NC.Book ncBook = NC.Book.OpenRead(file);
+        Book output = Book.FromNCBook(ncBook);
+        ncBook.Close();
+        return output;
+    }
     public static Book FromNCBook(NC.Book ncBook)
     {
         Account root = Account.FromNCAccount(ncBook.RootAccount);
@@ -24,11 +33,25 @@ class Book
         return newBook;
     }
 
-    public Account? get_account(String full_name)
+    List<Account> GetAccounts(Account searchRoot)
     {
-        return Book.get_account(full_name, this.root);
+        List<Account> accounts = new List<Account>();
+        accounts.Add(searchRoot);
+        foreach (Account child in searchRoot.children)
+        {
+            accounts.AddRange(GetAccounts(child));
+        }
+        return accounts;
     }
-    private static Account? get_account(String full_name, Account searchRootAccount)
+    public List<Account> GetAccounts()
+    {
+        return GetAccounts(this.root);
+    }
+    public Account? GetAccount(String full_name)
+    {
+        return Book.GetAccount(full_name, this.root);
+    }
+    private static Account? GetAccount(String full_name, Account searchRootAccount)
     {
         if (searchRootAccount.fullName == full_name)
         {
@@ -36,7 +59,7 @@ class Book
         }
         foreach (Account child in searchRootAccount.children)
         {
-            Account? result = Book.get_account(full_name, child);
+            Account? result = Book.GetAccount(full_name, child);
             if (result != null)
             {
                 return result;

@@ -1,4 +1,5 @@
 using NC = NetCash;
+namespace GNCDiff;
 
 class Diff
 {

@@ -1,5 +1,6 @@
 using NC = NetCash;
-class Account
+namespace GNCDiff;
+public class Account
 {
     public String fullName {get;}
     String name;

@@ -1,5 +1,6 @@
 using NC = NetCash;
-class Split {
+namespace GNCDiff;
+public class Split {
     Account account;
     NC.GncNumeric amount;
     String memo;
@@ -12,7 +13,7 @@ class Split {
 
     public static Split FromNCSplit(NC.Split ncSplit, in Book book)
     {
-        Account? account = book.get_account(ncSplit.Account.FullName);
+        Account? account = book.GetAccount(ncSplit.Account.FullName);
         if (account == null) 
         {
             throw new ArgumentException("Account not found: " + ncSplit.Account.FullName);
