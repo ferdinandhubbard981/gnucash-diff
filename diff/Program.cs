@@ -18,13 +18,10 @@ class Program
         Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o =>
         {
 
-            NC.GnuCashEngine.Initialize();
-            // NC.GnuCashEngine.Shutdown();
-            NC.GnuCashEngine.Initialize();
-
-            // Book book = Book.FromGNCFile("/home/ferdi/gnucash-version-control/diff.Tests/test_data/single_account.gnucash");
-            // Diff diff = Diff.FromBooks(oldBook, newBook);
-            // Console.WriteLine("file1: {0}", o.file_1);
+        Book before = Book.FromGNCFile(o.file_1);
+        Book after = Book.FromGNCFile(o.file_2);
+        Diff diff = Diff.FromBooks(before, after);
+        diff.Display();
         });
     }
 }

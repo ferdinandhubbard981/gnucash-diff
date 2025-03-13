@@ -78,4 +78,9 @@ public class Diff
         }
         return account_steps;
     }
+
+    public void Display()
+    {
+        throw new NotImplementedException();
+    }
 }

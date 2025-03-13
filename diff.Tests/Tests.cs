@@ -49,7 +49,7 @@ public class Tests
     }
 
     [Fact]
-    public void TestAccountDeleted()
+    public void TestDiffAccountDeleted()
     {
         Book before = Book.FromGNCFile("../../../test_data/diff/account_deleted/before.gnucash");
         Book after = Book.FromGNCFile("../../../test_data/diff/account_deleted/after.gnucash");
