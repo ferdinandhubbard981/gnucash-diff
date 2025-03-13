@@ -1,10 +1,10 @@
 using NC = NetCash;
 namespace GNCDiff;
 
-class Diff
+public class Diff
 {
     // contains a list of steps to transform book A into book B
-    private List<BookMod> steps;
+    List<BookMod> steps;
 
     public Diff(List<BookMod> steps)
     {
@@ -96,64 +96,11 @@ class Diff
 }
 
 // The type of modification that is being done
-enum ModType
+public enum ModType
 {
     ADD,
     REMOVE
     // TODO: add EDIT
 
 }
-// A single modification to a book
-abstract class BookMod
-{
-    protected ModType typeOfModification;
 
-    public BookMod(ModType typeOfModification)
-    {
-        this.typeOfModification = typeOfModification;
-    }
-
-    public abstract void ApplyMod(NC.Book book);
-    public abstract void DisplayMod();
-
-}
-
-class AccountMod : BookMod
-{
-    NC.Account account;
-    public AccountMod(ModType typeOfModification, NC.Account account) : base(typeOfModification)
-    {
-        this.account = account;
-    }
-
-    public override void ApplyMod(NC.Book book)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void DisplayMod()
-    {
-        throw new NotImplementedException();
-    }
-
-}
-
-class TransactionMod : BookMod
-{
-    NC.Transaction transaction;
-
-    public TransactionMod(ModType typeOfModification, NC.Transaction transaction) : base(typeOfModification)
-    {
-        this.transaction = transaction;
-    }
-    public override void ApplyMod(NC.Book book)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void DisplayMod()
-    {
-        throw new NotImplementedException();
-    }
-
-}
