@@ -10,7 +10,7 @@ public class BookTests
         Book book = Book.FromGNCFile(inputFile);
         List<Account> accounts = book.GetAccounts();
         Assert.True(accounts.Count == 2, "This book should have exactly two accounts"); // including root
-        Account? Expenses = book.GetAccount("Expenses");
+        Account? Expenses = book.GetAccountFirstOccurence("Expenses");
         Assert.False(Expenses == null, "This book should have an 'Expenses' account");
     }
 
@@ -28,6 +28,8 @@ public class BookTests
         string inputFile = "../../../test_data/two_accounts_with_transactions.gnucash";
         inputFile = Path.GetFullPath(inputFile);
         Book book = Book.FromGNCFile(inputFile);
+        List<Account> accounts = book.GetAccounts();
+        Assert.True(accounts.Count == 3, "This book should have exactly 3 accounts");
         List<(double, string)> expectedSplits = new List<(double, string)>();
         expectedSplits.Add((10025.0, "Expenses"));
         expectedSplits.Add((-10025.0, "Checking"));
@@ -49,4 +51,6 @@ public class BookTests
         }
 
     }
+
+    // TODO add test with duplicate accounts (to test if guid is working properly and is being used properly)
 }

@@ -33,6 +33,11 @@ public class Book
         return newBook;
     }
 
+    public List<Account> GetAccounts()
+    {
+        return GetAccounts(this.root);
+    }
+
     List<Account> GetAccounts(Account searchRoot)
     {
         List<Account> accounts = new List<Account>();
@@ -43,23 +48,22 @@ public class Book
         }
         return accounts;
     }
-    public List<Account> GetAccounts()
+
+
+    public Account? GetAccount(Guid guid)
     {
-        return GetAccounts(this.root);
+        return Book.GetAccount(guid, this.root);
     }
-    public Account? GetAccount(String full_name)
+
+    private static Account? GetAccount(Guid guid, Account searchRootAccount)
     {
-        return Book.GetAccount(full_name, this.root);
-    }
-    private static Account? GetAccount(String full_name, Account searchRootAccount)
-    {
-        if (searchRootAccount.fullName == full_name)
+        if (searchRootAccount.guid == guid)
         {
             return searchRootAccount;
         }
         foreach (Account child in searchRootAccount.children)
         {
-            Account? result = Book.GetAccount(full_name, child);
+            Account? result = Book.GetAccount(guid, child);
             if (result != null)
             {
                 return result;
@@ -67,4 +71,26 @@ public class Book
         }
         return null;
     }
+
+    public Account? GetAccountFirstOccurence(String full_name)
+    {
+        return Book.GetAccountFirstOccurence(full_name, this.root);
+    }
+    private static Account? GetAccountFirstOccurence(String full_name, Account searchRootAccount)
+    {
+        if (searchRootAccount.fullName == full_name)
+        {
+            return searchRootAccount;
+        }
+        foreach (Account child in searchRootAccount.children)
+        {
+            Account? result = Book.GetAccountFirstOccurence(full_name, child);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+        return null;
+    }
+
 }
