@@ -4,7 +4,7 @@ namespace GNCDiff;
 public class Diff
 {
     // contains a list of steps to transform book A into book B
-    List<BookMod> steps;
+    public List<BookMod> steps {get;}
 
     public Diff(List<BookMod> steps)
     {

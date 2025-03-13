@@ -19,10 +19,12 @@ class Program
         {
 
             NC.GnuCashEngine.Initialize();
-            NC.Book  oldBook = NC.Book .OpenRead(o.file_1);
-            NC.Book  newBook = NC.Book .OpenRead(o.file_2);
-            Diff diff = Diff.FromBooks(oldBook, newBook);
-            Console.WriteLine("file1: {0}", o.file_1);
+            // NC.GnuCashEngine.Shutdown();
+            NC.GnuCashEngine.Initialize();
+
+            // Book book = Book.FromGNCFile("/home/ferdi/gnucash-version-control/diff.Tests/test_data/single_account.gnucash");
+            // Diff diff = Diff.FromBooks(oldBook, newBook);
+            // Console.WriteLine("file1: {0}", o.file_1);
         });
     }
 }

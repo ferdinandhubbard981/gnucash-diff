@@ -1,13 +1,11 @@
 ﻿namespace diff.Tests;
 using GNCDiff;
-public class BookTests
+public class Tests
 {
     [Fact]
     public void TestBookLoaded()
     {
-        string inputFile = "../../../test_data/single_account.gnucash";
-        inputFile = Path.GetFullPath(inputFile); // get absolute path, otherwise gnucash will look for it somewhere else
-        Book book = Book.FromGNCFile(inputFile);
+        Book book = Book.FromGNCFile("../../../test_data/single_account.gnucash");
         List<Account> accounts = book.GetAccounts();
         Assert.True(accounts.Count == 2, "This book should have exactly two accounts"); // including root
         Account? Expenses = book.GetAccountFirstOccurence("Expenses");
@@ -25,9 +23,7 @@ public class BookTests
     [Fact]
     public void TestBookLoadedWithTransactions()
     {
-        string inputFile = "../../../test_data/two_accounts_with_transactions.gnucash";
-        inputFile = Path.GetFullPath(inputFile);
-        Book book = Book.FromGNCFile(inputFile);
+        Book book = Book.FromGNCFile("../../../test_data/two_accounts_with_transactions.gnucash");
         List<Account> accounts = book.GetAccounts();
         Assert.True(accounts.Count == 3, "This book should have exactly 3 accounts");
         List<(double, string)> expectedSplits = new List<(double, string)>();
@@ -50,6 +46,13 @@ public class BookTests
             Assert.True(splitFound, "Should have contained a particular split");
         }
 
+    }
+
+    [Fact]
+    public void TestAccountDeleted()
+    {
+        Book before = Book.FromGNCFile("../../../test_data/diff/account_deleted/before.gnucash");
+        Book after = Book.FromGNCFile("../../../test_data/diff/account_deleted/after.gnucash");
     }
 
     // TODO add test with duplicate accounts (to test if guid is working properly and is being used properly)

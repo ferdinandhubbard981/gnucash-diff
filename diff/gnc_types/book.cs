@@ -12,6 +12,7 @@ public class Book
 
     public static Book FromGNCFile(string file)
     {
+        file = Path.GetFullPath(file); // get absolute path, otherwise gnucash will look for it somewhere else
         GNCInitialiseTracker.InitialiseGNCEngine();
         NC.Book ncBook = NC.Book.OpenRead(file);
         Book output = Book.FromNCBook(ncBook);
