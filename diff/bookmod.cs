@@ -1,16 +1,10 @@
 using NC = NetCash;
 namespace GNCDiff;
 // A single modification to a book
-public abstract class BookMod
+public interface IBookMod
 {
-    protected ModType typeOfModification;
-
-    public BookMod(ModType typeOfModification)
-    {
-        this.typeOfModification = typeOfModification;
-    }
-
-    public abstract void ApplyMod(NC.Book book);
+    public abstract void ApplyMod(out NC.Book book);
     public abstract void DisplayMod();
+    // public abstract String ToString();
 
 }

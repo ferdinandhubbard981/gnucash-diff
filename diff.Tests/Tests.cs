@@ -53,6 +53,12 @@ public class Tests
     {
         Book before = Book.FromGNCFile("../../../test_data/diff/account_deleted/before.gnucash");
         Book after = Book.FromGNCFile("../../../test_data/diff/account_deleted/after.gnucash");
+        Account? removedAccount = before.GetAccountFirstOccurence("Checking");
+        Assert.False(removedAccount == null, "Expected to find Checking account");
+        IBookMod accountRemovalStep = new RemoveAccountMod(removedAccount);
+        Diff diff = Diff.FromBooks(before, after);
+        Assert.True(diff.steps.Count == 1, "Expected there to only be 1 step");
+        Assert.True(diff.steps[0].ToString() == accountRemovalStep.ToString(), "Account removal step not as expected");
     }
 
     // TODO add test with duplicate accounts (to test if guid is working properly and is being used properly)

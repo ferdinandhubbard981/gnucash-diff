@@ -1,44 +1,45 @@
+using System.Linq;
 using NC = NetCash;
 namespace GNCDiff;
 
 public class Diff
 {
     // contains a list of steps to transform book A into book B
-    public List<BookMod> steps {get;}
+    public List<IBookMod> steps {get;}
 
-    public Diff(List<BookMod> steps)
+    public Diff(List<IBookMod> steps)
     {
         this.steps = steps;
     }
 
-    public static Diff FromBooks(NC.Book oldBook, NC.Book newBook)
+    public static Diff FromBooks(Book oldBook, Book newBook)
     {
-        List<BookMod> steps = new List<BookMod>();
+        List<IBookMod> steps = new List<IBookMod>();
         steps.AddRange(GenerateAccountSteps(oldBook, newBook));
         // steps.AddRange(GenerateTransactionSteps(oldBook, newBook));
         return new Diff(steps);
     }
 
-    static List<BookMod> GenerateAccountSteps(NC.Book oldBook, NC.Book newBook)
+    static List<IBookMod> GenerateAccountSteps(Book oldBook, Book newBook)
     {
-        List<NC.Account> oldAccounts = (List<NC.Account>) oldBook.Accounts;
-        List<NC.Account> newAccounts = (List<NC.Account>) newBook.Accounts;
+        List<Account> oldAccounts = (List<Account>) oldBook.GetAccounts();
+        List<Account> newAccounts = (List<Account>) newBook.GetAccounts();
         // let intersection be oldBook intersects newBook
-        List<NC.Account> intersection = (List<NC.Account>) oldAccounts.Intersect(newAccounts);
+        List<Account> intersection = oldAccounts.Intersect(newAccounts).ToList();
         // let accountsRemoved be oldBook \ intersection
-        List<NC.Account> accountsRemoved = (List<NC.Account>) oldAccounts.Except(intersection);
+        List<Account> accountsRemoved = oldAccounts.Except(intersection).ToList();
         // let accountsAdded be newBook \ intersection
-        List<NC.Account> accountsAdded = (List<NC.Account>) newAccounts.Except(intersection);
-        Comparison<NC.Account> comparisonFunction = delegate (NC.Account account1, NC.Account account2)
+        List<Account> accountsAdded = newAccounts.Except(intersection).ToList();
+        Comparison<Account> comparisonFunction = delegate (Account account1, Account account2)
         {
-            Func<NC.Account, int> getAccountDepth = delegate (NC.Account account)
+            Func<Account, int> getAccountDepth = delegate (Account account)
             {
-                NC.Account parent = account.Parent;
+                Account? parent = account.parent;
                 int depth = 0;
                 while (parent != null)
                 {
                     depth++;
-                    parent = parent.Parent;
+                    parent = parent.parent;
                 }
                 return depth;
             };
@@ -63,44 +64,18 @@ public class Diff
         accountsRemoved.Reverse();
         // sort accountsAdded with ascending depth (add top-level accounts first, work down tree)
         accountsAdded.Sort(comparisonFunction);
-        List<BookMod> account_steps = new List<BookMod>();
+        List<IBookMod> account_steps = new List<IBookMod>();
         // for accounts in accountsAdded and accountsRemoved: make into BookMod and add to list
-        foreach (NC.Account account in accountsAdded)
+        foreach (Account account in accountsAdded)
         {
-            BookMod step = new AccountMod(ModType.ADD, account);
+            IBookMod step = new AddAccountMod(account);
             account_steps.Add(step);
         }
-        foreach (NC.Account account in accountsRemoved)
+        foreach (Account account in accountsRemoved)
         {
-            BookMod step = new AccountMod(ModType.REMOVE, account);
+            IBookMod step = new RemoveAccountMod(account);
             account_steps.Add(step);
         }
         return account_steps;
     }
-
-    static List<BookMod> GenerateTransactionSteps(NC.Book oldBook, NC.Book newBook)
-    {
-        throw new NotImplementedException();
-        /*
-        ignore removed accounts
-        foreach account:
-            let T(n) be the account's transactions in newBook
-            let T(o) be the account's transactions in oldBook
-            let intersection be T(n) intersects T(o)
-            let transactionsRemoved be T(o) \ intersection
-            let transactionsAdded be T(n) \ intersection
-            return transactionsAdded union transacionsRemoved
-        */
-
-    }
 }
-
-// The type of modification that is being done
-public enum ModType
-{
-    ADD,
-    REMOVE
-    // TODO: add EDIT
-
-}
-

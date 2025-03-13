@@ -1,19 +1,39 @@
 using NC = NetCash;
 namespace GNCDiff;
-class AccountMod : BookMod
+public class RemoveAccountMod : IBookMod
 {
-    NC.Account account;
-    public AccountMod(ModType typeOfModification, NC.Account account) : base(typeOfModification)
+    Account account;
+    public RemoveAccountMod(Account account)
     {
         this.account = account;
     }
 
-    public override void ApplyMod(NC.Book book)
+    public void ApplyMod(out NC.Book book)
     {
         throw new NotImplementedException();
     }
 
-    public override void DisplayMod()
+    public void DisplayMod()
+    {
+        throw new NotImplementedException();
+    }
+
+}
+
+public class AddAccountMod : IBookMod
+{
+    Account account;
+    public AddAccountMod(Account account)
+    {
+        this.account = account;
+    }
+
+    public void ApplyMod(out NC.Book book)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DisplayMod()
     {
         throw new NotImplementedException();
     }
