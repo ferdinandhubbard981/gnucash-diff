@@ -99,8 +99,11 @@ public class Diff
         return split_steps;
     }
 
-    public void Display()
+    public String ToDiffString()
     {
-        throw new NotImplementedException();
+        List<String> stepStrings = new List<string>();
+        foreach (IBookMod step in this.steps) stepStrings.Add(step.ToDiffString());
+        String output = String.Join('\n', stepStrings);
+        return output;
     }
 }

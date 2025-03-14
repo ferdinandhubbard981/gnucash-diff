@@ -59,7 +59,7 @@ public class Tests
         IBookMod accountRemovalStep = new RemoveAccountMod(removedAccount);
         Diff diff = Diff.FromBooks(before, after);
         Assert.True(diff.steps.Count == 1, "Expected there to only be 1 step.");
-        Assert.True(diff.steps[0].ToString() == accountRemovalStep.ToString(), "Account removal step not as expected.");
+        Assert.True(diff.steps[0].ToDiffString() == accountRemovalStep.ToDiffString(), "Account removal step not as expected.");
     }
 
     [Fact]
@@ -72,7 +72,7 @@ public class Tests
         IBookMod accountCreationStep = new AddAccountMod(addedAccount);
         Diff diff = Diff.FromBooks(before, after);
         Assert.True(diff.steps.Count == 1, "Expected there to only be 1 step.");
-        Assert.True(diff.steps[0].ToString() == accountCreationStep.ToString(), "Account creation step not as expected.");
+        Assert.True(diff.steps[0].ToDiffString() == accountCreationStep.ToDiffString(), "Account creation step not as expected.");
     }
 
     [Fact]
@@ -110,4 +110,5 @@ public class Tests
             Assert.True(expectedAddedSplitGuids.Contains(splitGuid), $"Expected split: {splitGuid} to be added");
         }
     }
+    // add a split that remains constant in these 2 tests' data files
 }

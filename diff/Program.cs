@@ -17,11 +17,10 @@ class Program
     {
         Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o =>
         {
-
-        Book before = Book.FromGNCFile(o.file_1);
-        Book after = Book.FromGNCFile(o.file_2);
-        Diff diff = Diff.FromBooks(before, after);
-        diff.Display();
+            Book before = Book.FromGNCFile(o.file_1);
+            Book after = Book.FromGNCFile(o.file_2);
+            Diff diff = Diff.FromBooks(before, after);
+            Console.WriteLine(diff.ToDiffString());
         });
     }
 }

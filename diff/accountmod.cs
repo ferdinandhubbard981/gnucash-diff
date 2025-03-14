@@ -13,9 +13,9 @@ public class RemoveAccountMod : IBookMod
         throw new NotImplementedException();
     }
 
-    public void DisplayMod()
+    public String ToDiffString()
     {
-        throw new NotImplementedException();
+        return $"Removed Account {this.account.fullName}";
     }
 
 }
@@ -33,9 +33,9 @@ public class AddAccountMod : IBookMod
         throw new NotImplementedException();
     }
 
-    public void DisplayMod()
+    public String ToDiffString()
     {
-        throw new NotImplementedException();
+        return $"Added Account {this.account.fullName}";
     }
 
 }

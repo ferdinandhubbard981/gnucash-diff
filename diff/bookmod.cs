@@ -4,7 +4,6 @@ namespace GNCDiff;
 public interface IBookMod
 {
     public abstract void ApplyMod(out NC.Book book);
-    public abstract void DisplayMod();
-    // public abstract String ToString();
+    public abstract String ToDiffString();
 
 }

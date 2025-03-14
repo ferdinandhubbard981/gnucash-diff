@@ -13,9 +13,9 @@ public class RemoveSplitMod: IBookMod
         throw new NotImplementedException();
     }
 
-    public void DisplayMod()
+    public String ToDiffString()
     {
-        throw new NotImplementedException();
+        return $"Removed split: {(double) this.split.amount} to {this.split.account.fullName}";
     }
 }
 public class AddSplitMod: IBookMod
@@ -30,8 +30,8 @@ public class AddSplitMod: IBookMod
         throw new NotImplementedException();
     }
 
-    public void DisplayMod()
+    public String ToDiffString()
     {
-        throw new NotImplementedException();
+        return $"Added split: {(double) this.split.amount} to {this.split.account.fullName}";
     }
 }
