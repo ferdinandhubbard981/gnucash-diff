@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\diff\diff.csproj" />
+    <ProjectReference Include="..\diff.Core\diff.Core.csproj" />
   </ItemGroup>
 
 </Project>
