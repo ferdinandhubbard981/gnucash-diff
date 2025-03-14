@@ -94,4 +94,13 @@ public class Book
         return null;
     }
 
+    public Split? GetSplit(Guid guid)
+    {
+        foreach (Split split in this.splits)
+        {
+            if (split.guid == guid) return split;
+        }
+        return null;
+    }
+
 }

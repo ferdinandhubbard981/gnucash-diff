@@ -75,4 +75,39 @@ public class Tests
         Assert.True(diff.steps[0].ToString() == accountCreationStep.ToString(), "Account creation step not as expected.");
     }
 
+    [Fact]
+    public void TestDiffSplitDeleted()
+    {
+        Book before = Book.FromGNCFile("../../../test_data/diff/split/deleted/before.gnucash");
+        Book after = Book.FromGNCFile("../../../test_data/diff/split/deleted/after.gnucash");
+        List<Guid> expectedRemovedSplitGuids = new List<Guid>();
+        expectedRemovedSplitGuids.Add(new Guid("ca794802-425a-4ba5-96fe-bd00d787c5d5"));
+        expectedRemovedSplitGuids.Add(new Guid("4ae7f4e4-907b-490c-824b-68aa5ebbb634"));
+        Diff diff = Diff.FromBooks(before, after);
+        Assert.True(diff.steps.Count == 2, $"Expected there to be 2 steps. Found {diff.steps.Count}.");
+        foreach (IBookMod step in diff.steps)
+        {
+            Assert.True(step.GetType() == typeof(RemoveSplitMod), $"Expected {typeof(RemoveSplitMod)}, got {step.GetType()}");
+            Guid splitGuid = ((RemoveSplitMod) step).split.guid;
+            Assert.True(expectedRemovedSplitGuids.Contains(splitGuid), $"Expected split: {splitGuid} to be removed");
+        }
+    }
+
+    [Fact]
+    public void TestDiffSplitCreated()
+    {
+        Book before = Book.FromGNCFile("../../../test_data/diff/split/created/before.gnucash");
+        Book after = Book.FromGNCFile("../../../test_data/diff/split/created/after.gnucash");
+        List<Guid> expectedAddedSplitGuids = new List<Guid>();
+        expectedAddedSplitGuids.Add(new Guid("7ada3532-cc98-400d-a107-e6f393e895d7"));
+        expectedAddedSplitGuids.Add(new Guid("e1482c20-a8e8-41d0-b142-72111c4dc04e"));
+        Diff diff = Diff.FromBooks(before, after);
+        Assert.True(diff.steps.Count == 2, $"Expected there to be 2 steps. Found {diff.steps.Count}.");
+        foreach (IBookMod step in diff.steps)
+        {
+            Assert.True(step.GetType() == typeof(AddSplitMod), $"Expected {typeof(AddSplitMod)}, got {step.GetType()}");
+            Guid splitGuid = ((AddSplitMod) step).split.guid;
+            Assert.True(expectedAddedSplitGuids.Contains(splitGuid), $"Expected split: {splitGuid} to be added");
+        }
+    }
 }

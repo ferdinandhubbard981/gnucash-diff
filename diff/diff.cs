@@ -16,6 +16,7 @@ public class Diff
     {
         List<IBookMod> steps = new List<IBookMod>();
         steps.AddRange(GenerateAccountSteps(oldBook, newBook));
+        steps.AddRange(GenerateSplitSteps(oldBook, newBook));
         // steps.AddRange(GenerateTransactionSteps(oldBook, newBook));
         return new Diff(steps);
     }
@@ -77,6 +78,25 @@ public class Diff
             account_steps.Add(step);
         }
         return account_steps;
+    }
+
+    public static List<IBookMod> GenerateSplitSteps(Book oldBook, Book newBook)
+    {
+        List<Split> oldSplits = oldBook.splits;
+        List<Split> newSplits = newBook.splits;
+        List<Split> intersection = oldSplits.Intersect(newSplits).ToList();
+        List<Split> removedSplits = oldSplits.Except(intersection).ToList();
+        List<Split> addedSplits = newSplits.Except(intersection).ToList();
+        List<IBookMod> split_steps = new List<IBookMod>();
+        foreach (Split split in removedSplits)
+        {
+            split_steps.Add(new RemoveSplitMod(split));
+        }
+        foreach (Split split in addedSplits)
+        {
+            split_steps.Add(new AddSplitMod(split));
+        }
+        return split_steps;
     }
 
     public void Display()
