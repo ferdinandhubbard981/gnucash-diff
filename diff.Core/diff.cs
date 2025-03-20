@@ -12,6 +12,12 @@ public class Diff
         this.steps = steps;
     }
 
+    public static Diff FromBooks(string oldBookPath, string newBookPath)
+    {
+        Book oldBook = Book.FromGNCFile(oldBookPath);
+        Book newBook = Book.FromGNCFile(newBookPath);
+        return Diff.FromBooks(oldBook, newBook);
+    }
     public static Diff FromBooks(Book oldBook, Book newBook)
     {
         List<IBookMod> steps = new List<IBookMod>();

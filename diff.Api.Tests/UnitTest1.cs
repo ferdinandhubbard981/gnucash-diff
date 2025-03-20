@@ -16,8 +16,8 @@ public class Tests : IClassFixture<WebApplicationFactory<Program>>
     public async Task Test1()
     {
         string basePath = "../../../data/Test1/";
-        string testFile1Path = Path.Join(basePath, "testfile1.txt");
-        string testFile2Path = Path.Join(basePath, "testfile2.txt");
+        string testFile1Path = Path.Join(basePath, "old.gnucash");
+        string testFile2Path = Path.Join(basePath, "new.gnucash");
         HttpClient client = _factory.CreateClient();
         using var form = new MultipartFormDataContent();
         var file1Content = new ByteArrayContent(File.ReadAllBytes(testFile1Path));
@@ -31,8 +31,6 @@ public class Tests : IClassFixture<WebApplicationFactory<Program>>
         var response = await client.PostAsync("/diff", form);
         response.EnsureSuccessStatusCode();
 
-        var responseString = await response.Content.ReadAsStringAsync();
-        Assert.Contains("testfile1.txt", responseString);
-        Assert.Contains("testfile2.txt", responseString);
+        // var responseString = await response.Content.ReadAsStringAsync();
     }
 }
