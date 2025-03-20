@@ -1,5 +1,4 @@
 ﻿using CommandLine;
-using NC = NetCash;
 using GNCDiff;
 
 

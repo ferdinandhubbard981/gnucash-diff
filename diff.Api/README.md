@@ -1,0 +1,1 @@
+This is a RESTful web api for [gnucash-diff](https://github.com/ferdinandhubbard981/gnucash-diff).
