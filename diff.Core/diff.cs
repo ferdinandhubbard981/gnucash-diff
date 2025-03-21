@@ -110,6 +110,7 @@ public class Diff
         List<String> stepStrings = new List<string>();
         foreach (IBookMod step in this.steps) stepStrings.Add(step.ToDiffString());
         String output = String.Join('\n', stepStrings);
+        output = "\n" + output;
         return output;
     }
 }
