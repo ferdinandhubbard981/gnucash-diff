@@ -27,7 +27,7 @@ public class DiffController : ControllerBase
 
     [HttpPost()]
     // TODO: make async
-    public string Post(IFormFile file1, IFormFile file2)
+    public ActionResult<string> Post(IFormFile file1, IFormFile file2)
     {
         if (file1 == null || file2 == null)
         {
