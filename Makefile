@@ -13,3 +13,7 @@ debug-docker-run:
 	docker run --rm --network host -e Urls="http://localhost:5000" diff.api.debug
 
 debug: debug-docker-build debug-docker-run
+ 
+docker-publish:
+	docker tag diff.api ej21378/diff.api
+	docker push ej21378/diff.api
