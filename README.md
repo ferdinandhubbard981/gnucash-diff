@@ -2,9 +2,13 @@ This software finds the diff between two gnucash files.
 
 diff.Core contains the diff functionality.
 
-diff.Cli is a console app that allows you to use find the diff between two gnucash files
+diff.Api is a rest api with an endpoint that takes two gnucash files and returns the diff in a formatted string.
+
+diff.Cli is a console app that allows you to use find the diff between two gnucash files.
 
 diff.Tests contains tests for diff.Core
+
+diff.Api.Tests contains tests for diff.Api
 
 Dependencies: 
 - [Gnucash](https://www.gnucash.org/download.phtml)
