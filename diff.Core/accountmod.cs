@@ -17,7 +17,6 @@ public class RemoveAccountMod : IBookMod
     {
         return $"Removed Account {this.account.fullName}";
     }
-
 }
 
 public class AddAccountMod : IBookMod
@@ -37,5 +36,25 @@ public class AddAccountMod : IBookMod
     {
         return $"Added Account {this.account.fullName}";
     }
+}
 
+public class MoveAccountMod : IBookMod
+{
+    Account accountBefore;
+    Account accountAfter;
+    public MoveAccountMod(Account accountBefore, Account accountAfter)
+    {
+        this.accountBefore = accountBefore;
+        this.accountAfter = accountAfter;
+    }
+
+    public void ApplyMod(out NC.Book book)
+    {
+        throw new NotImplementedException();
+    }
+
+    public String ToDiffString()
+    {
+        return $"Moved Account {this.accountBefore.fullName} to {this.accountAfter.fullName}";
+    }
 }

@@ -76,6 +76,21 @@ public class Tests
     }
 
     [Fact]
+    public void TestDiffAccountMoved()
+    {
+        Book before = Book.FromGNCFile("../../../test_data/diff/account/moved/before.gnucash");
+        Book after = Book.FromGNCFile("../../../test_data/diff/account/moved/after.gnucash");
+        Diff diff = Diff.FromBooks(before, after);
+        Account? accountBefore = before.GetAccountFirstOccurence("Expenses.Tax.Income tax");
+        Assert.True(accountBefore != null, "Expected to find 'Expenses.Tax.Income tax' in before.gnucash");
+        Account? accountAfter = after.GetAccountFirstOccurence("Expenses.Income tax");
+        Assert.True(accountAfter != null, "Expected to find 'Expenses.Income tax' in after.gnucash");
+        MoveAccountMod accountMovedStep = new MoveAccountMod(accountBefore, accountAfter);
+        Assert.True(diff.steps.Count == 1, $"Expected there to be exactly one step, found {diff.steps.Count}.");
+        Assert.True(diff.steps[0].ToString() == accountMovedStep.ToString(), $"Expected:\n{accountMovedStep}\nInstead we have:\n{diff.steps[0]}\n");
+    }
+
+    [Fact]
     public void TestDiffSplitDeleted()
     {
         Book before = Book.FromGNCFile("../../../test_data/diff/split/deleted/before.gnucash");

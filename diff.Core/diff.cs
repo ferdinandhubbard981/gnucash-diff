@@ -1,5 +1,3 @@
-using System.Linq;
-using NC = NetCash;
 namespace GNCDiff;
 
 public class Diff
@@ -29,6 +27,7 @@ public class Diff
 
     static List<IBookMod> GenerateAccountSteps(Book oldBook, Book newBook)
     {
+        List<IBookMod> account_steps = new List<IBookMod>();
         List<Account> oldAccounts = (List<Account>) oldBook.GetAccounts();
         List<Account> newAccounts = (List<Account>) newBook.GetAccounts();
         // let intersection be oldBook intersects newBook
@@ -37,6 +36,28 @@ public class Diff
         List<Account> accountsRemoved = oldAccounts.Except(intersection).ToList();
         // let accountsAdded be newBook \ intersection
         List<Account> accountsAdded = newAccounts.Except(intersection).ToList();
+
+        // iterate backwards, so that we can remove items without affecting loop
+        for (int i = accountsAdded.Count-1; i >= 0; i--)
+        {
+            Account addedAccount = accountsAdded[i];
+            for (int j = accountsRemoved.Count - 1; j >= 0; j--)
+            {
+                Account removedAccount = accountsRemoved[j];
+                if (addedAccount.guid == removedAccount.guid)
+                {
+                    List<IBookMod> modifications = Diff.FindAccountMods(removedAccount, addedAccount);
+                    if (modifications.Count > 0)
+                    {
+                        account_steps.AddRange(modifications);
+                        // we found a set of modifications that map the old account to the new account, therefore we remove the added and removed account steps
+                        accountsAdded.Remove(addedAccount);
+                        accountsRemoved.Remove(removedAccount);
+                    }
+                }
+            }
+        }
+
         Comparison<Account> comparisonFunction = delegate (Account account1, Account account2)
         {
             Func<Account, int> getAccountDepth = delegate (Account account)
@@ -71,7 +92,6 @@ public class Diff
         accountsRemoved.Reverse();
         // sort accountsAdded with ascending depth (add top-level accounts first, work down tree)
         accountsAdded.Sort(comparisonFunction);
-        List<IBookMod> account_steps = new List<IBookMod>();
         // for accounts in accountsAdded and accountsRemoved: make into BookMod and add to list
         foreach (Account account in accountsAdded)
         {
@@ -103,6 +123,18 @@ public class Diff
             split_steps.Add(new AddSplitMod(split));
         }
         return split_steps;
+    }
+
+    // this function tries to map the old account into the new account. It assumes that their GUIDs are identical.
+    public static List<IBookMod> FindAccountMods(Account oldAccount, Account newAccount)
+    {
+        List<IBookMod> accountModifications = new List<IBookMod>();
+        if (oldAccount.fullName != newAccount.fullName || oldAccount.name != newAccount.name) 
+        {
+            accountModifications.Add(new MoveAccountMod(oldAccount, newAccount));
+        }
+        return accountModifications;
+
     }
 
     public String ToDiffString()
