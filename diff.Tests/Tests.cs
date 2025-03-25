@@ -91,6 +91,21 @@ public class Tests
     }
 
     [Fact]
+    public void TestPlaceholderModified()
+    {
+        Book before = Book.FromGNCFile("../../../test_data/diff/account/placeholder_mod/before.gnucash");
+        Book after = Book.FromGNCFile("../../../test_data/diff/account/placeholder_mod/after.gnucash");
+        Diff diff = Diff.FromBooks(before, after);
+        Account? accountBefore = before.GetAccountFirstOccurence("Expenses.Tax");
+        Assert.True(accountBefore != null, "Expected to find 'Expenses.Tax' in before.gnucash");
+        Account? accountAfter = after.GetAccountFirstOccurence("Expenses.Tax");
+        Assert.True(accountAfter != null, "Expected to find 'Expenses.Tax' in after.gnucash");
+        IsPlaceholderAccountMod placeholderMod = new IsPlaceholderAccountMod(accountBefore, accountAfter);
+        Assert.True(diff.steps.Count == 1, $"Expected there to be exactly one step, found {diff.steps.Count}.");
+        Assert.True(diff.steps[0].ToString() == placeholderMod.ToString(), $"Expected:\n{placeholderMod}\nInstead we have:\n{diff.steps[0]}\n");
+    }
+
+    [Fact]
     public void TestDiffSplitDeleted()
     {
         Book before = Book.FromGNCFile("../../../test_data/diff/split/deleted/before.gnucash");

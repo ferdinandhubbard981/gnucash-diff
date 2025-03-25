@@ -43,3 +43,19 @@ public class MoveAccountMod : IBookMod
         return $"Moved Account {this.accountBefore.fullName} to {this.accountAfter.fullName}";
     }
 }
+
+public class IsPlaceholderAccountMod : IBookMod
+{
+    Account accountBefore;
+    Account accountAfter;
+    public IsPlaceholderAccountMod(Account accountBefore, Account accountAfter)
+    {
+        this.accountBefore = accountBefore;
+        this.accountAfter = accountAfter;
+    }
+
+    public String ToDiffString()
+    {
+        return $"The account {this.accountBefore.name} placeholder status changed from {accountBefore.isPlaceholder} to {accountAfter.isPlaceholder}";
+    }
+}

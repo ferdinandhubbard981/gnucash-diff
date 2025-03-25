@@ -133,6 +133,10 @@ public class Diff
         {
             accountModifications.Add(new MoveAccountMod(oldAccount, newAccount));
         }
+        if (oldAccount.isPlaceholder != newAccount.isPlaceholder)
+        {
+            accountModifications.Add(new IsPlaceholderAccountMod(oldAccount, newAccount));
+        }
         return accountModifications;
 
     }
