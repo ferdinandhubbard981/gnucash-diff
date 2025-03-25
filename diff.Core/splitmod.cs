@@ -8,11 +8,6 @@ public class RemoveSplitMod: IBookMod
     {
         this.split = split;
     }
-    public void ApplyMod(out NC.Book book)
-    {
-        throw new NotImplementedException();
-    }
-
     public String ToDiffString()
     {
         return $"Removed split: {(double) this.split.amount} to {this.split.account.fullName}";
@@ -25,11 +20,6 @@ public class AddSplitMod: IBookMod
     {
         this.split = split;
     }
-    public void ApplyMod(out NC.Book book)
-    {
-        throw new NotImplementedException();
-    }
-
     public String ToDiffString()
     {
         return $"Added split: {(double) this.split.amount} to {this.split.account.fullName}";

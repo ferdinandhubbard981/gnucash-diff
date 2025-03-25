@@ -8,11 +8,6 @@ public class RemoveAccountMod : IBookMod
         this.account = account;
     }
 
-    public void ApplyMod(out NC.Book book)
-    {
-        throw new NotImplementedException();
-    }
-
     public String ToDiffString()
     {
         return $"Removed Account {this.account.fullName}";
@@ -25,11 +20,6 @@ public class AddAccountMod : IBookMod
     public AddAccountMod(Account account)
     {
         this.account = account;
-    }
-
-    public void ApplyMod(out NC.Book book)
-    {
-        throw new NotImplementedException();
     }
 
     public String ToDiffString()
@@ -46,11 +36,6 @@ public class MoveAccountMod : IBookMod
     {
         this.accountBefore = accountBefore;
         this.accountAfter = accountAfter;
-    }
-
-    public void ApplyMod(out NC.Book book)
-    {
-        throw new NotImplementedException();
     }
 
     public String ToDiffString()
