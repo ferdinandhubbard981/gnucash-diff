@@ -114,6 +114,25 @@ public class Diff
         List<Split> removedSplits = oldSplits.Except(intersection).ToList();
         List<Split> addedSplits = newSplits.Except(intersection).ToList();
         List<IBookMod> split_steps = new List<IBookMod>();
+        for (int i = removedSplits.Count-1; i >= 0; i--)
+        {
+            Split removedSplit = removedSplits[i];
+            for (int j = addedSplits.Count-1; j >= 0; j--)
+            {
+                Split addedSplit = addedSplits[j];
+                if (removedSplit.guid == addedSplit.guid)
+                {
+                    List<IBookMod> splitModifications = Diff.FindSplitMods(removedSplit, addedSplit);
+                    if (splitModifications.Count > 0)
+                    {
+                        split_steps.AddRange(splitModifications);
+                        removedSplits.Remove(removedSplit);
+                        addedSplits.Remove(addedSplit);
+                    }
+
+                }
+            }
+        }
         foreach (Split split in removedSplits)
         {
             split_steps.Add(new RemoveSplitMod(split));
@@ -138,7 +157,15 @@ public class Diff
             accountModifications.Add(new IsPlaceholderAccountMod(oldAccount, newAccount));
         }
         return accountModifications;
+    }
 
+    public static List<IBookMod> FindSplitMods(Split oldSplit, Split newSplit)
+    {
+        List<IBookMod> splitModifications = new List<IBookMod>();
+        if (oldSplit.account.guid != newSplit.account.guid) return []; // we have not implemented this mod yet, so we will just say deleted and created
+        if (oldSplit.amount != newSplit.amount) splitModifications.Add(new ChangeAmountSplitMod(oldSplit, newSplit));
+        if (oldSplit.memo != newSplit.memo) return []; // we have not implemented this mod yet, so we will just say deleted and created
+        return splitModifications;
     }
 
     public String ToDiffString()

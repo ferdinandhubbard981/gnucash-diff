@@ -110,9 +110,11 @@ public class Tests
     {
         Book before = Book.FromGNCFile("../../../test_data/diff/split/deleted/before.gnucash");
         Book after = Book.FromGNCFile("../../../test_data/diff/split/deleted/after.gnucash");
-        List<Guid> expectedRemovedSplitGuids = new List<Guid>();
-        expectedRemovedSplitGuids.Add(new Guid("ca794802-425a-4ba5-96fe-bd00d787c5d5"));
-        expectedRemovedSplitGuids.Add(new Guid("4ae7f4e4-907b-490c-824b-68aa5ebbb634"));
+        List<Guid> expectedRemovedSplitGuids =
+        [
+            new Guid("ca794802-425a-4ba5-96fe-bd00d787c5d5"),
+            new Guid("4ae7f4e4-907b-490c-824b-68aa5ebbb634"),
+        ];
         Diff diff = Diff.FromBooks(before, after);
         Assert.True(diff.steps.Count == 2, $"Expected there to be 2 steps. Found {diff.steps.Count}.");
         foreach (IBookMod step in diff.steps)
@@ -128,9 +130,11 @@ public class Tests
     {
         Book before = Book.FromGNCFile("../../../test_data/diff/split/created/before.gnucash");
         Book after = Book.FromGNCFile("../../../test_data/diff/split/created/after.gnucash");
-        List<Guid> expectedAddedSplitGuids = new List<Guid>();
-        expectedAddedSplitGuids.Add(new Guid("7ada3532-cc98-400d-a107-e6f393e895d7"));
-        expectedAddedSplitGuids.Add(new Guid("e1482c20-a8e8-41d0-b142-72111c4dc04e"));
+        List<Guid> expectedAddedSplitGuids =
+        [
+            new Guid("7ada3532-cc98-400d-a107-e6f393e895d7"),
+            new Guid("e1482c20-a8e8-41d0-b142-72111c4dc04e"),
+        ];
         Diff diff = Diff.FromBooks(before, after);
         Assert.True(diff.steps.Count == 2, $"Expected there to be 2 steps. Found {diff.steps.Count}.");
         foreach (IBookMod step in diff.steps)
@@ -141,4 +145,29 @@ public class Tests
         }
     }
     // add a split that remains constant in these 2 tests' data files
+
+    [Fact]
+    public void TestDiffSplitAmountModified()
+    {
+        Book before = Book.FromGNCFile("../../../test_data/diff/split/amount_modified/before.gnucash");
+        Book after = Book.FromGNCFile("../../../test_data/diff/split/amount_modified/after.gnucash");
+        Diff diff = Diff.FromBooks(before, after);
+        Assert.True(diff.steps.Count == 2, $"Expected there to be only 2 steps. Found {diff.steps.Count}.");
+        Dictionary<Guid, (double, double)> expectedData = [];
+        expectedData.Add(new Guid("93179af8-aa21-4d39-b5ff-eb9a7f556088"), (9250, 3000));
+        expectedData.Add(new Guid("c343ae29-fbfd-499c-b410-3a304d799dc5"), (-9250, -3000));
+        foreach (IBookMod step in diff.steps)
+        {
+            ChangeAmountSplitMod amountChangedStep = (ChangeAmountSplitMod) step;
+            var expected = expectedData[amountChangedStep.before.guid];
+            Assert.True(amountChangedStep.before.amount == expected.Item1, $"Expected previous amount to be {expected.Item1} ,found {amountChangedStep.before.amount}");
+            Assert.True(amountChangedStep.after.amount == expected.Item2, $"Expected new amount to be {expected.Item2} ,found {amountChangedStep.after.amount}");
+        }
+        double previousAmount = 9250;
+        double actualPreviousAmount = (double)((ChangeAmountSplitMod) diff.steps[0]).before.amount;
+        Assert.True(actualPreviousAmount == previousAmount, $"expected previous amount to be {previousAmount}, found {actualPreviousAmount}");
+        double newAmount = 3000;
+        double actualNewAmount = (double)((ChangeAmountSplitMod) diff.steps[0]).after.amount;
+        Assert.True(actualNewAmount == newAmount, $"expected previous amount to be {newAmount}, found {actualNewAmount}");
+    }
 }
